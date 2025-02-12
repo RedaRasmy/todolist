@@ -8,7 +8,7 @@ export type FormFields = {
     username: string;
     password: string;
 };
-export type SubmitFunction = (data: FormFields, setError: UseFormSetError<FormFields>) => void
+export type SubmitFunction = (data: FormFields, setError: UseFormSetError<FormFields>) => Promise<unknown>
 
 export function Form({
     onSub,
@@ -26,11 +26,17 @@ export function Form({
         formState: { errors, isSubmitting },
     } = useForm<FormFields>();
 
-    const onSubmit: SubmitHandler<FormFields> = (data) => {
+    const onSubmit: SubmitHandler<FormFields> = async (data) => {
         if (onSub) {
-            onSub(data, setError);
+            await onSub(data, setError);
         }
     };
+
+    const error = errors.username ?
+    errors.username.message
+    :errors.password?.message
+
+    console.log(error)
 
     return (
         <div className="max-w-md w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black">
@@ -38,8 +44,7 @@ export function Form({
                 {title}
             </h2>
             <p className="text-red-600 max-w-sm mt-2">
-                {errors.username?.message}
-                {!errors.username && errors.password?.message}
+                {error}
             </p>
 
             <form

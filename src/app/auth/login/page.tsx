@@ -6,6 +6,7 @@ import { Form, SubmitFunction } from "../components/Form";
 export default function page() {
     const handleSubmit: SubmitFunction = async (data,setError) => {
         // use api
+        
     }
 
     return <div className="w-full">
