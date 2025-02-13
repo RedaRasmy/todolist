@@ -6,9 +6,7 @@ import getAuthErrorMessage from "../utils/getAuthErrorMessage";
 
 export default function page() {
     const handleSubmit: SubmitFunction = async (data,setError) => {
-        // use api
         try {
-            console.log('fetching..')
             const res = await axios.post(
                 "/auth/register",
                 JSON.stringify(data),
