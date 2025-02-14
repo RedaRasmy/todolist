@@ -1,16 +1,14 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import { Delete } from "lucide-react";
 import { useId } from "react";
+import TodoType from "../types/todo.type";
 
-export type TodoType = {
-    task: string;
-    checked: boolean;
-};
+
 type TodoProps = {
     onDelete?: () => void;
     onChangeTask?: () => void;
     onToggle?: () => void;
-} & TodoType;
+} & Omit<TodoType,"_id">;
 
 export default function Todo({
     task,
@@ -19,11 +17,12 @@ export default function Todo({
     // onChangeTask,
     onToggle,
 }: TodoProps) {
+
     const id = useId();
 
     return (
-        <div className="flex items-center justify-between">
-            <div className="flex justify-center gap-4">
+        <div className="flex items-center justify-between max-w-96">
+            <div className="flex items-center gap-4">
                 <Checkbox
                     id={id}
                     checked={checked}
@@ -31,7 +30,9 @@ export default function Todo({
                 />
                 <label htmlFor={id}>{task}</label>
             </div>
-            <Delete onClick={onDelete} />
+            <Delete 
+            className="text-red-600 cursor-pointer"
+            onClick={onDelete} />
         </div>
     );
 }

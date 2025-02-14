@@ -1,5 +1,6 @@
 'use client'
 import useAuth from "./auth/hooks/useAuth";
+import TodoList from "./Todos/components/TodoList";
 
 export default function Home() {
     const {auth} = useAuth()
@@ -7,11 +8,7 @@ export default function Home() {
     console.log(auth)
     return (
         <div>
-            {
-                auth ? 
-                <p>{auth.username}</p>
-                : "unauthorized"
-            }
+            <TodoList/>
         </div>
     )
 }

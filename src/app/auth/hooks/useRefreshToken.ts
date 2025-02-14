@@ -16,6 +16,7 @@ export default function useRefreshToken() {
             return {
                 ...prev,
                 accessToken : res.data.accessToken,
+                isAuth: true
             }
         })
         return res.data.accessToken
