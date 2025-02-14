@@ -30,7 +30,8 @@ export default function LoginPage() {
 
             setAuth({
                 username:data.username,
-                accessToken
+                accessToken,
+                isAuth: true
             })
             return res;
         } catch (err) {
