@@ -1,31 +1,10 @@
 'use client'
-import axios from "@/app/api/axios";
-import { Form, SubmitFunction } from "../components/Form";
+import { Form, } from "../components/Form";
 import ToLogin from "./ToLogin";
-import getAuthErrorMessage from "../utils/getAuthErrorMessage";
+import useRegister from "./useRegister";
 
-export default function page() {
-    const handleSubmit: SubmitFunction = async (data,setError) => {
-        try {
-            const res = await axios.post(
-                "/auth/register",
-                JSON.stringify(data),
-                {
-                    headers: {
-                        'Content-Type' : "application/json",
-                    },
-                    withCredentials: true
-                }
-            )
-            return res
-        } catch (err) {
-            const message = getAuthErrorMessage(err)
-            setError('username',{
-                message,
-            })
-            return err
-        }
-    }
+export default function RegisterPage() {
+    const handleRegister = useRegister()
 
     return (
         <div 
@@ -33,9 +12,9 @@ export default function page() {
         >
             <ToLogin/>
             <Form 
-            title="Welcome to Todos" 
+            title="Welcome to Todos"
             buttonText="Sign up" 
-            onSub={handleSubmit}
+            onSub={handleRegister}
             />
         </div>
     )

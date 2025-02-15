@@ -1,10 +1,12 @@
 "use client";
+import { redirect } from "next/navigation";
 import {
     createContext,
     Dispatch,
     ReactNode,
     SetStateAction,
     useContext,
+    useEffect,
     useState,
 } from "react";
 
@@ -28,6 +30,12 @@ const AuthContext = createContext<AuthContextType | null>(null);
 /// Provider
 export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
     const [auth, setAuth] = useState<Auth>(initialAuth);
+
+    useEffect(()=>{
+        if (auth.isAuth) {
+            redirect('/')
+        }
+    },[auth])
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
