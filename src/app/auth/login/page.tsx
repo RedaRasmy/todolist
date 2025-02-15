@@ -3,14 +3,14 @@ import ToRegister from "./ToRegister";
 import { Form, SubmitFunction } from "../components/Form";
 import getAuthErrorMessage from "../utils/getAuthErrorMessage";
 import axios from "@/app/api/axios";
-import useAuth from "../hooks/useAuth";
+import { useAuthContext } from "@/app/context/AuthContextProvider";
 
 type LoginRes = {
     accessToken : string
 }
 
 export default function LoginPage() {
-    const { setAuth } = useAuth()
+    const { setAuth } = useAuthContext()
     
     const handleSubmit: SubmitFunction = async (data, setError) => {
         try {

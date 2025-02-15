@@ -1,12 +1,12 @@
 'use client'
-import useAuth from "./auth/hooks/useAuth";
+import { useAuthContext } from "./context/AuthContextProvider";
 import TodoList from "./Todos/components/TodoList";
 
 export default function Home() {
-    const {auth} = useAuth()
+    const {auth} = useAuthContext()
 
     console.log(auth)
-    
+
     return (
         <div>
             <TodoList/>
