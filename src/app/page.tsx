@@ -7,7 +7,7 @@ import TodoList from "./Todos/components/TodoList";
 export default function Home() {
     const {auth} = useAuthContext()
 
-    console.log(auth)
+    console.log('auth in the page : ',auth)
 
     return (
         <div className="flex flex-col justify-center items-center h-[100dvh]">

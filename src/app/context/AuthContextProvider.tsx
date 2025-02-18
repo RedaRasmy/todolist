@@ -34,7 +34,10 @@ export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
     useEffect(()=>{
         if (auth.isAuth) {
             redirect('/')
-        }
+        } 
+        // else {
+        //     redirect('/auth/login')
+        // }
     },[auth])
 
     return (

@@ -14,7 +14,7 @@ export default function TodoList() {
         const getTodos = async () => {
             try {
                 const res = await axiosPrivate.get<TodoType[]>("/todos", {
-                    signal: controller.signal
+                    signal: controller.signal,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any );
                 if (isMounted) setTodos(res.data);
@@ -30,7 +30,7 @@ export default function TodoList() {
             isMounted = false
             controller.abort()
         }
-    },[]);
+    },[axiosPrivate]);
 
     return (
         <div className="p-5">
