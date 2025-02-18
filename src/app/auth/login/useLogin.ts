@@ -23,11 +23,13 @@ export default function useLogin() {
             // i need to store token
             console.log("this is login response : ", res)
 
-            setAuth({
+            const newAuth = {
                 username:data.username,
                 accessToken,
                 isAuth: true
-            })
+            }
+            setAuth(newAuth)
+            localStorage.setItem('auth',JSON.stringify(newAuth))
             console.log('logged in')
             return res;
         } catch (err) {

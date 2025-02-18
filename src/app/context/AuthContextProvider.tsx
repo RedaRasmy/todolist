@@ -1,12 +1,10 @@
 "use client";
-import { redirect } from "next/navigation";
 import {
     createContext,
     Dispatch,
     ReactNode,
     SetStateAction,
     useContext,
-    useEffect,
     useState,
 } from "react";
 
@@ -31,14 +29,6 @@ const AuthContext = createContext<AuthContextType | null>(null);
 export const AuthContextProvider = ({ children }: { children?: ReactNode }) => {
     const [auth, setAuth] = useState<Auth>(initialAuth);
 
-    useEffect(()=>{
-        if (auth.isAuth) {
-            redirect('/')
-        } 
-        // else {
-        //     redirect('/auth/login')
-        // }
-    },[auth])
 
     return (
         <AuthContext.Provider value={{ auth, setAuth }}>
@@ -55,6 +45,10 @@ export const useAuthContext = () => {
         throw new Error(
             "useAuthContext must be used within a AuthContextProvider "
         );
+    }
+    const sotredAuth = localStorage.getItem('auth')
+    if (sotredAuth) {
+        context.setAuth(JSON.parse(sotredAuth))
     }
     return context;
 };

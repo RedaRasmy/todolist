@@ -14,7 +14,9 @@ export default function useAxiosPrivate() {
         const reqIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (config.headers && !config.headers['Authorization']) {
-                    config.headers['Authorization'] = "Bearer "+ auth.accessToken
+                    console.log('req.headers.auth not exist :',config.headers)
+                    config.headers['Authorization'] = `Bearer ${auth.accessToken}`
+                    console.log('req.headers.auth added :',config.headers)
                 }
                 return config
             },
@@ -24,19 +26,23 @@ export default function useAxiosPrivate() {
         const resIntercept = axiosPrivate.interceptors.response.use(
             res => res,
             async (err) => {
+                
                 const prevReq = err.config
-                if (err.response.status === 403 && !prevReq.sent) {
+                if (err.response?.status && err.response.status === 403 && !prevReq.sent) {
                     prevReq.sent = true;
                     try {
+                        console.log('trying to get new accessToken')
                         const newAccessToken = await refresh()
-                        prevReq.headers['Authorization'] = 'Bearer ' + newAccessToken
+                        console.log('new access token :',newAccessToken)
+                        prevReq.headers['Authorization'] = `Bearer ${newAccessToken}`
                         return axiosPrivate(prevReq)
                     } catch (refreshError) {
+                        console.log('failed to get new accessToken')
                         console.error("refresh error :" , refreshError)
                         return Promise.reject(refreshError);
                     }
                 }
-                // return Promise.reject(err)
+                return Promise.reject(err)
             }
         )
 

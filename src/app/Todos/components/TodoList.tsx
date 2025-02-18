@@ -9,26 +9,25 @@ export default function TodoList() {
     const axiosPrivate = useAxiosPrivate()
 
     useEffect(() => {
-        const controller = new AbortController();
+        // const controller = new AbortController();
         let isMounted = true
         const getTodos = async () => {
             try {
                 const res = await axiosPrivate.get<TodoType[]>("/todos", {
-                    signal: controller.signal,
+                    // signal: controller.signal,
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 } as any );
                 if (isMounted) setTodos(res.data);
-
                 console.log(res);
             } catch (err) {
-                console.log(err);
+                console.log('failed to get Todos :',err);
             }
         };
         getTodos();
 
         return () => { 
             isMounted = false
-            controller.abort()
+            // controller.abort()
         }
     },[axiosPrivate]);
 
